@@ -1,0 +1,19 @@
+:host{
+  display: block;
+  margin-top: 0.5rem;
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content > div {
+  flex: 1;
+}
+mat-icon{
+  justify-content: flex-end;
+}
+p{
+  text-align: center;
+}

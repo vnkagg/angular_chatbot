@@ -1,0 +1,14 @@
+<form (submit)="sendText(postForm)" #postForm="ngForm">
+  <mat-card>
+    <mat-form-field>
+      <input name="title" matInput type="text" placeholder="Post Title" ngModel required #title="ngModel">
+      <mat-error *ngIf="title.invalid">Please enter a valid Title</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea name="content_input" matInput rows="6" cols="100" placeholder="Post Content" ngModel required #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">Please enter some valid content</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color = "accent" type="submit">Click Me</button>
+  </mat-card>
+</form>
+
