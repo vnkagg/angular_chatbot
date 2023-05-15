@@ -7,7 +7,8 @@ mat-card{
   padding-bottom: 1%;
 }
 button{
-  width: 10%;
+  max-width: fit-content;
+  padding: 2% 4%;
   margin: auto;
 }
 p{

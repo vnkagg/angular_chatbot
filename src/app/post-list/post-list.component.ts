@@ -1,20 +1,28 @@
-import { Component, Input, Output, EventEmitter} from '@angular/core';
+import { postService } from './../post.service';
+import { Component, OnInit } from '@angular/core';
 import { Post } from '../post.model';
-import { postService } from '../post.service';
-
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
-export class PostListComponent {
-  @Input() posts : Post[] = [];
-  @Output() tobedeleted = new EventEmitter();
-  deletePost(id : number){
-    this.tobedeleted.emit(id);
+export class PostListComponent implements OnInit{
+  posts : Post[] = [];
+  postSub : Subscription = new Subscription;
+
+  constructor(public postService : postService) {}
+
+  deletePost(post : Post){
+    this.postService.deletePost(post);
   }
-  postservice : postService;
-  constructor(service: postService){
-    this.postservice = service;
+
+  ngOnInit(): void {
+    //this.posts = this.postService.getPosts();
+    this.postService.getPosts();
+    this.postSub = this.postService.getPostUpdatedListener()
+      .subscribe((storePost : Post[]) => {
+        this.posts = storePost;
+      });
   }
 }

@@ -1,12 +1,27 @@
-<mat-accordion *ngIf="posts.length > 0">
-  <mat-expansion-panel *ngFor="let post of posts">
-    <mat-expansion-panel-header>
-      <div class="header-content">
-        <div>{{ post?.title }}</div>
-        <mat-icon (click)="deletePost(post.id)" fontIcon="delete"></mat-icon>
-      </div>
-    </mat-expansion-panel-header>
-    {{ post?.content }}
-  </mat-expansion-panel>
-</mat-accordion>
+<div class="grid" *ngIf="posts.length > 0">
+  <div  *ngFor="let post of posts">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <div class="header-content">
+            <div>{{ post?.title }}</div>
+            <mat-action-row>
+              <button mat-button (click) = "deletePost(post)" color="warn">
+                <mat-icon fontIcon="delete"></mat-icon>
+                DELETE
+              </button>
+            </mat-action-row>
+          </div>
+        </mat-expansion-panel-header>
+        {{ post?.content }}
+        <mat-action-row>
+          <button mat-button color="accent">
+            <mat-icon fontIcon="edit"></mat-icon>
+            EDIT/ MAKE CHANGES
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
 <p *ngIf="posts.length == 0 "> No posts to display...</p>
