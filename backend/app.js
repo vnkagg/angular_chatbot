@@ -4,9 +4,6 @@ const app = express();
 const Post = require('./models/post');
 const mongoose = require('mongoose');
 
-var backendposts = []; // i need globally
-var temppostsfromdeletion = []; // i dont need globally
-var c =[];
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers",
@@ -27,35 +24,35 @@ mongoose.connect("mongodb+srv://vnkaggarwal1:ZWzeRMwib0Ww2Ohv@cluster0.rxww8xk.m
   });
 
 app.post('/api/posts', (req, res, next) => {
-  // post = req.body;
   const post = Post({
     title : req.body.title,
-    content : req.body.content
+    content : req.body.content,
   });
-  post.save();
+  post.save()
+    .then(() => {
+      res.status(201).json({
+        message : 'a post was added successfully in the backend'
+      });
+    });
   console.log(post);
-  (post.api_call === "to_be_deleted")
-  ? (() =>  {
-          backendposts = backendposts.filter((item) => item.id!==post.id); // there is no {} in the arrow function to evaluate a condition
-          console.log("a post is deleted from the backend, there are total of ", backendposts.length, " number of posts");
-          res.status(201).json({
-            message : "this post was deleted successfully from the backend"
-          });
-        })()
-  : (() => {
-          post.api_call = 'this_post_is_in_the_backend';
-          backendposts.push(post);
-          console.log("new post added in the backend, there are total of ", backendposts.length, " number of posts");
-          res.status(201).json({
-            message : "this post was added successfully in the backend"
-          });
-        })()
+});
+app.delete('/api/posts/:id', (req, res, next) =>{
+  Post.deleteOne({ _id : req.params.id })
+    .then(result => {
+      console.log(result);
+      res.status(200).json({
+        message : "this post was deleted"
+      });
+    });
 });
 app.get('/api/posts', (req, res, next) => {
-  res.status(200).json({
-    message : "this is an api response from the backend",
-    posts : backendposts
-  });
+  Post.find()
+    .then((documents) => {
+      res.status(200).json({
+        message : "this is an api response from the backend",
+        posts : documents
+      });
+    });
 });
 
 module.exports = app;

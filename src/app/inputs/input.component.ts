@@ -21,10 +21,9 @@ export class InputComponent{
       return;
     }
     const post : Post = {
-                  id : -1, //this is just a dummy/temp id, it is supposed to be modified in app.component
+                  id : '', //this is just a dummy/temp id
                   title : form.value.title,
                   content : form.value.content,
-                  api_call : ""
                 };
                 //console.log(post);
     this.postService.addPosts(post);

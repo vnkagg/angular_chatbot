@@ -13,8 +13,8 @@ export class PostListComponent implements OnInit{
 
   constructor(public postService : postService) {}
 
-  deletePost(post : Post){
-    this.postService.deletePost(post);
+  deletePost(id : string){
+    this.postService.deletePost(id);
   }
 
   ngOnInit(): void {
