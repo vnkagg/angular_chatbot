@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const Post = require('./models/post');
+const mongoose = require('mongoose');
 
 var backendposts = []; // i need globally
 var temppostsfromdeletion = []; // i dont need globally
@@ -16,9 +18,22 @@ app.use((req, res, next) => {
 // how to send just an integer as json?
 
 app.use(bodyParser.json());
+mongoose.connect("mongodb+srv://vnkaggarwal1:ZWzeRMwib0Ww2Ohv@cluster0.rxww8xk.mongodb.net/my_db?retryWrites=true&w=majority")
+  .then(() => {
+    console.log("connection to the database : successful");
+  })
+  .catch(() => {
+    console.log("connection to the database : failed");
+  });
 
 app.post('/api/posts', (req, res, next) => {
-  post = req.body;
+  // post = req.body;
+  const post = Post({
+    title : req.body.title,
+    content : req.body.content
+  });
+  post.save();
+  console.log(post);
   (post.api_call === "to_be_deleted")
   ? (() =>  {
           backendposts = backendposts.filter((item) => item.id!==post.id); // there is no {} in the arrow function to evaluate a condition
