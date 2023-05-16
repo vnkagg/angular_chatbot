@@ -2,10 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
-app.use(bodyParser.json());
-
-var backendposts = [];
-var temppostsfromdeletion = [];
+var backendposts = []; // i need globally
+var temppostsfromdeletion = []; // i dont need globally
+var c =[];
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers",
@@ -14,36 +13,24 @@ app.use((req, res, next) => {
                 "GET, POST, PATCH, DELETE, OPTIONS");
   next();
 });
-app.delete('/api/posts', (req, res, next) => {
-  const postID = req.params.id;
-  backendposts = backendposts.filter((item) => {item.id!==postID;});
+// how to send just an integer as json?
 
-  res.status(201).json({
-  message : "this post was deleted successfully from the backend"
-  });
-});
+app.use(bodyParser.json());
+
 app.post('/api/posts', (req, res, next) => {
-  const post = req.body;
-  backendposts.push(post);
-  res.status(201).json({
-  message : "this post was added successfully from the backend"
-  });
-});
-//DEBUG THIS HOW TO SEND AN INTEGER AS A JSON OBJECT AND DEPARSE IT FROM THERE
-app.post('/api/posts', (req, res, next) => {
-  console.log(req.body);
-  const post = req.body;
-  console.log(post);
+  post = req.body;
   (post.api_call === "to_be_deleted")
-  ? (() => {temppostsfromdeletion = backendposts.filter((item) => {item.id!==post.id;});
-          backendposts = temppostsfromdeletion;
-          temppostsfromdeletion = [];
+  ? (() =>  {
+          backendposts = backendposts.filter((item) => item.id!==post.id); // there is no {} in the arrow function to evaluate a condition
+          console.log("a post is deleted from the backend, there are total of ", backendposts.length, " number of posts");
           res.status(201).json({
             message : "this post was deleted successfully from the backend"
           });
         })()
   : (() => {
+          post.api_call = 'this_post_is_in_the_backend';
           backendposts.push(post);
+          console.log("new post added in the backend, there are total of ", backendposts.length, " number of posts");
           res.status(201).json({
             message : "this post was added successfully in the backend"
           });

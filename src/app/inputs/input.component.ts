@@ -24,7 +24,7 @@ export class InputComponent{
                   id : -1, //this is just a dummy/temp id, it is supposed to be modified in app.component
                   title : form.value.title,
                   content : form.value.content,
-                  api_call : "bazinga_this_is_a_random_string_because_it_doesnt_affect"
+                  api_call : ""
                 };
                 //console.log(post);
     this.postService.addPosts(post);

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 @Injectable({providedIn : 'root'})
 export class postService{
-  private storePost : Post[] = [];
+  //private storePost : Post[] = [];
   private postUpdater = new Subject<Post[]>();
 
   constructor(private http : HttpClient){}
@@ -15,8 +15,8 @@ export class postService{
   getPosts(){
     this.http.get<{message : string, posts : Post[]}>('http://localhost:8080/api/posts')
       .subscribe((postdata) => {
-        this.storePost = postdata.posts;
-        this.postUpdater.next([...this.storePost]);
+        //this.storePost = postdata.posts;
+        this.postUpdater.next([...postdata.posts]);
       });
     // WHY WAS THE POST NOT SHOWING ON LOAD, WHEN THE POST UPDATEER WAS CALLED AFTER THE HTTPS REQUEST.
     //this.postUpdater.next([...this.storePost]);
@@ -37,7 +37,7 @@ export class postService{
     post.api_call = "to_be_deleted";
     this.http.post<{message : string}>('http://localhost:8080/api/posts', post)
       .subscribe((responseData) => {
-        console.log(responseData);
+        console.log(responseData.message);
         this.getPosts();
       });
     //this.storePost = this.storePost.filter((post) => post.id!==id);
