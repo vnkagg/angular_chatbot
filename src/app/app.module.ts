@@ -4,6 +4,7 @@ import { InputComponent } from './inputs/input.component';
 import { PostListComponent } from './post-list/post-list.component';
 
 import { NgModule } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';

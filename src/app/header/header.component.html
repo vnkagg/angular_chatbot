@@ -1,5 +1,7 @@
 <mat-toolbar>
   <mat-toolbar-row>
-    My Messages
+    <a routerLink="/">My Messages</a>
+    <span class = " spacer "></span>
+    <span><a [routerLink]="['/create']" routerLinkActive="mat-accent">Add Post</a></span>
   </mat-toolbar-row>
 </mat-toolbar>
