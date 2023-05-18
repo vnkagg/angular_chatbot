@@ -5,3 +5,11 @@ a{
 .spacer{
   flex : 1 1 auto;
 }
+ul{
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+li{
+  margin-left: 1rem;
+}

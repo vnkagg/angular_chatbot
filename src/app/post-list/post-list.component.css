@@ -1,22 +1,19 @@
-:host{
-  display: block;
-  margin-top: 0.5rem;
-}
-.header-content {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-}
 button{
-  flex: 1;
   margin-left: auto;
 }
 p{
   text-align: center;
 }
-.grid{
-  display: grid;
-  grid: ' . . . ';
-  gap : 10px;
+.postclass{
+  margin-right: 0.1%;
+  margin-bottom: 0.1rem;
+}
+:host{
+  display: block;
+}
+span{
+  white-space:pre-line;
+}
+mat-spinner{
+  margin: auto;
 }

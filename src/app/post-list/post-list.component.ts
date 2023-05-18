@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 export class PostListComponent implements OnInit{
   posts : Post[] = [];
   postSub : Subscription = new Subscription;
+  isLoading = false;
 
   constructor(public postService : postService) {}
 
@@ -18,10 +19,12 @@ export class PostListComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     //this.posts = this.postService.getPosts();
     this.postService.getPosts();
     this.postSub = this.postService.getPostUpdatedListener()
       .subscribe((storePost : Post[]) => {
+        this.isLoading = false;
         this.posts = storePost;
       });
   }
