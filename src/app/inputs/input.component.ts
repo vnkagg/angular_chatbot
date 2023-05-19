@@ -33,6 +33,7 @@ export class InputComponent implements OnInit{
           });
       }
     });
+    this.isLoading = false;
   }
   sendText(form : NgForm){
     if(form.invalid){

@@ -2,14 +2,16 @@
 <form *ngIf="!isLoading" (submit)="sendText(postForm)" #postForm="ngForm">
   <mat-card>
     <mat-form-field>
-      <input name="title" matInput type="text" placeholder="Post Title" [ngModel] = "fetchedPost?.title" required #title="ngModel">
+      <input name="title" matInput type="text" placeholder="Post Title" [ngModel] = "fetchedPost.title" required #title="ngModel">
       <mat-error *ngIf="title.invalid">Please enter a valid title</mat-error>
     </mat-form-field>
+    <button mat-stroked-button type="button" id="pickimage" (click)="formPicker.click()">Pick Image</button>
+    <input type="file" #formPicker>
     <mat-form-field>
-      <textarea name="content" matInput rows="6" cols="100" placeholder="Post Content" [ngModel] = "fetchedPost?.content" required #content="ngModel"></textarea>
+      <textarea name="content" matInput rows="6" cols="100" placeholder="Post Content" [ngModel] = "fetchedPost.content" required #content="ngModel"></textarea>
       <mat-error *ngIf="content.invalid">Please enter some valid content</mat-error>
     </mat-form-field>
-    <button mat-raised-button color = "accent" type="submit">Click Me</button>
+    <button mat-raised-button color = "primary" type="submit">Save Post</button>
   </mat-card>
 </form>
 

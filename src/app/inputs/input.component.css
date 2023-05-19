@@ -8,12 +8,20 @@ mat-card{
 }
 button{
   max-width: fit-content;
-  padding: 2% 4%;
   margin: auto;
+  padding: 2% 4%;
 }
 p{
   text-align: center;
 }
 mat-spinner{
   margin: auto;
+}
+input[type="file"]{
+  display: none;
+}
+
+#pickimage{
+  margin-left: 5%;
+  margin-bottom: 2%;
 }

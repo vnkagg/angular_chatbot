@@ -34,16 +34,6 @@ export class postService{
         this.postUpdater.next([...transformedPosts]); //the postsArr version was added to implement the getPost method
       });
   }
-  addPosts(post : Post){
-    this.http.post<{message : string, id_generated : string}>('http://localhost:8080/api/posts', post)
-      .subscribe((responseData) => {
-        console.log("post.service.ts file/addPosts : ", responseData.message);
-        post.id = responseData.id_generated; // this was done to try resolve the put 404 error
-        this.postsArr.push(post);
-        this.postUpdater.next([...this.postsArr]); //the postsArr version was added to implement the getPost method
-        this.router.navigate(['/']);
-      });
-  }
   updatePost(post : Post) {
     console.log("this post has reached the post service, updatePost method : ", post);
     // the put request is not getting executed only
@@ -54,6 +44,16 @@ export class postService{
         temparr[temparr.findIndex((item) => item.id === post.id)] = post;
         this.postsArr = temparr;
         this.postUpdater.next([...this.postsArr]);
+        this.router.navigate(['/']);
+      });
+  }
+  addPosts(post : Post){
+    this.http.post<{message : string, id_generated : string}>('http://localhost:8080/api/posts', post)
+      .subscribe((responseData) => {
+        console.log("post.service.ts file/addPosts : ", responseData.message);
+        post.id = responseData.id_generated; // this was done to try resolve the put 404 error
+        this.postsArr.push(post);
+        this.postUpdater.next([...this.postsArr]); //the postsArr version was added to implement the getPost method
         this.router.navigate(['/']);
       });
   }
