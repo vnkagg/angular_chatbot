@@ -30,27 +30,21 @@ mat-spinner {
   overflow: scroll;
 } */
 
-.post-content {
+.parent-container {
   display: flex;
+  height : 500px;
   align-items: flex-start;
 }
 
-.left-half {
+.child-container {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   height: fit-content;
+  max-height: inherit;
+}
+#text{
   overflow: scroll;
   white-space: pre-line;
-}
-
-.right-half{
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: fit-content;
-  align-items: flex-start;
+  height: inherit;
 }
 img{
   width: 100%;

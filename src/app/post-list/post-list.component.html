@@ -1,44 +1,32 @@
-<!-- <mat-spinner *ngIf="isLoading"></mat-spinner>
-<div class="container" *ngIf="posts.length > 0 && !isLoading">
-  <mat-accordion multi="false">
-    <mat-expansion-panel *ngFor="let post of posts" class="postclass">
-      <mat-expansion-panel-header>
-        <div class="header-content">
-          <div>{{ post?.title }}</div>
-        </div>
-      </mat-expansion-panel-header>
-      <div class = "post-content">
-        <span>{{ post?.content }}</span>
-        <img [src]="post.imagePath">
-      </div>
-      <mat-action-row>
-          <button mat-button color="accent" [routerLink]="['/edit', post.id]">
-          <mat-icon fontIcon="edit"></mat-icon>
-          EDIT
-        </button>
-        <button mat-button (click) = "deletePost(post.id)" color="warn">
-          <mat-icon fontIcon="delete"></mat-icon>
-          DELETE
-        </button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
-<p *ngIf="posts.length == 0 && !isLoading"> No posts to display...</p> -->
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div class="container" *ngIf="posts.length > 0 && !isLoading">
   <mat-accordion multi="false">
     <mat-expansion-panel *ngFor="let post of posts" class="postclass">
+      <!-- <script>
+        const parentContainer = container.querySelector('.parent-container');
+        const childContainers = parentContainer.querySelectorAll('.child-container');
+        let minHeight = childContainers[0].offsetHeight;
+        // Loop through child containers to find the minimum height
+        childContainers.forEach(container => {
+          const containerHeight = container.offsetHeight;
+          if(containerHeight < minHeight){minHeight = containerHeight;};
+        });
+
+        // Set the minimum height to the parent container
+        parentContainer.style.height = `${minHeight}px`;
+        console.log(parentContainer.style.height);
+
+      </script> -->
       <mat-expansion-panel-header>
         <div class="header-content">
           <div>{{ post?.title }}</div>
         </div>
       </mat-expansion-panel-header>
-      <div class="post-content">
-        <div class="left-half">
+      <div class="parent-container">
+        <div class="child-container" id="text">
           {{ post?.content }}
         </div>
-        <div class="right-half">
+        <div class="child-container">
           <img [src]="post.imagePath">
         </div>
       </div>
