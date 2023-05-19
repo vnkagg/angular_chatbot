@@ -23,5 +23,16 @@ input[type="file"]{
 
 #pickimage{
   margin-left: 5%;
+  margin-bottom: 1%;
+}
+.preview-container{
+  height : 5rem;
+  margin-left: 5%;
   margin-bottom: 2%;
+  border: 1px dotted white;
+  width: max-content;
+  padding: 1px;
+}
+.preview-container img{
+  height: 100%;
 }

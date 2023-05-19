@@ -1,19 +1,57 @@
-button{
+button {
   margin-left: auto;
 }
-p{
+
+p {
   text-align: center;
 }
-.postclass{
+
+.postclass {
   margin-right: 0.1%;
   margin-bottom: 0.1rem;
+  margin-top: 0.1rem;
 }
-:host{
-  display: block;
-}
-span{
-  white-space:pre-line;
-}
-mat-spinner{
+
+
+mat-spinner {
   margin: auto;
+}
+
+/*
+.container{
+  float: right;
+  width : 50%;
+  height: auto;
+}
+.another-container{
+  float: right;
+  width: 50%;
+  height :inherit ;
+  overflow: scroll;
+} */
+
+.post-content {
+  display: flex;
+  align-items: flex-start;
+}
+
+.left-half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: fit-content;
+  overflow: scroll;
+  white-space: pre-line;
+}
+
+.right-half{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  align-items: flex-start;
+}
+img{
+  width: 100%;
 }

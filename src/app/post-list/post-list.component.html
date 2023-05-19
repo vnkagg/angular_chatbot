@@ -1,26 +1,58 @@
+<!-- <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="container" *ngIf="posts.length > 0 && !isLoading">
+  <mat-accordion multi="false">
+    <mat-expansion-panel *ngFor="let post of posts" class="postclass">
+      <mat-expansion-panel-header>
+        <div class="header-content">
+          <div>{{ post?.title }}</div>
+        </div>
+      </mat-expansion-panel-header>
+      <div class = "post-content">
+        <span>{{ post?.content }}</span>
+        <img [src]="post.imagePath">
+      </div>
+      <mat-action-row>
+          <button mat-button color="accent" [routerLink]="['/edit', post.id]">
+          <mat-icon fontIcon="edit"></mat-icon>
+          EDIT
+        </button>
+        <button mat-button (click) = "deletePost(post.id)" color="warn">
+          <mat-icon fontIcon="delete"></mat-icon>
+          DELETE
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<p *ngIf="posts.length == 0 && !isLoading"> No posts to display...</p> -->
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div class="container" *ngIf="posts.length > 0 && !isLoading">
-  <div *ngFor="let post of posts" class="postclass">
-    <mat-accordion multi="false">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <div class="header-content">
-            <div>{{ post?.title }}</div>
-          </div>
-        </mat-expansion-panel-header>
-        <span>{{ post?.content }}</span>
-        <mat-action-row>
-            <button mat-button color="accent" [routerLink]="['/edit', post.id]">
-            <mat-icon fontIcon="edit"></mat-icon>
-            EDIT
-          </button>
-          <button mat-button (click) = "deletePost(post.id)" color="warn">
-            <mat-icon fontIcon="delete"></mat-icon>
-            DELETE
-          </button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
+  <mat-accordion multi="false">
+    <mat-expansion-panel *ngFor="let post of posts" class="postclass">
+      <mat-expansion-panel-header>
+        <div class="header-content">
+          <div>{{ post?.title }}</div>
+        </div>
+      </mat-expansion-panel-header>
+      <div class="post-content">
+        <div class="left-half">
+          {{ post?.content }}
+        </div>
+        <div class="right-half">
+          <img [src]="post.imagePath">
+        </div>
+      </div>
+      <mat-action-row>
+        <button mat-button color="accent" [routerLink]="['/edit', post.id]">
+          <mat-icon fontIcon="edit"></mat-icon>
+          EDIT
+        </button>
+        <button mat-button (click)="deletePost(post.id)" color="warn">
+          <mat-icon fontIcon="delete"></mat-icon>
+          DELETE
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
-<p *ngIf="posts.length == 0 && !isLoading"> No posts to display...</p>
+<p *ngIf="posts.length == 0 && !isLoading">No posts to display...</p>

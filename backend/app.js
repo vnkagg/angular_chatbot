@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -21,6 +22,6 @@ mongoose.connect("mongodb+srv://vnkaggarwal1:ZWzeRMwib0Ww2Ohv@cluster0.rxww8xk.m
   .catch(() => {
     console.log("connection to the database : failed");
   });
-
+app.use("/images", express.static(path.join("backend/images")));
 app.use("/api/posts", postsRoutes);
 module.exports = app;
