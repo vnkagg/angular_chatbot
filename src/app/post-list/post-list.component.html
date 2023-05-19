@@ -2,21 +2,6 @@
 <div class="container" *ngIf="posts.length > 0 && !isLoading">
   <mat-accordion multi="false">
     <mat-expansion-panel *ngFor="let post of posts" class="postclass">
-      <!-- <script>
-        const parentContainer = container.querySelector('.parent-container');
-        const childContainers = parentContainer.querySelectorAll('.child-container');
-        let minHeight = childContainers[0].offsetHeight;
-        // Loop through child containers to find the minimum height
-        childContainers.forEach(container => {
-          const containerHeight = container.offsetHeight;
-          if(containerHeight < minHeight){minHeight = containerHeight;};
-        });
-
-        // Set the minimum height to the parent container
-        parentContainer.style.height = `${minHeight}px`;
-        console.log(parentContainer.style.height);
-
-      </script> -->
       <mat-expansion-panel-header>
         <div class="header-content">
           <div>{{ post?.title }}</div>
@@ -43,4 +28,5 @@
     </mat-expansion-panel>
   </mat-accordion>
 </div>
+<mat-paginator *ngIf="posts.length > 0" color="accent" (page)="pageEvent($event)" [length]="total_posts" [pageSize]="postsperPage" [pageSizeOptions]="optforpageSize"></mat-paginator>
 <p *ngIf="posts.length == 0 && !isLoading">No posts to display...</p>

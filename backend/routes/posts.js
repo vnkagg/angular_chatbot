@@ -71,15 +71,35 @@ router.delete('/:id', (req, res, next) =>{
     });
 });
 router.get('', (req, res, next) => {
-  Post.find()
+  const querySearch = Post.find();
+  const page = +req.query.page;
+  const items = +req.query.items;
+  let fetched_docs;
+  if (page && items){
+    querySearch
+      .skip(items * (page-1))
+        .limit(items);
+        // .then((documents) => {
+        //   res.status(200).json({
+        //     message: 'response against the query',
+        //     posts : documents
+        //   });
+        // });
+  }
+  querySearch
     .then((documents) => {
-      //console.log("posts were get : ", documents);
-      res.status(200).json({
-        message : "this is an api response from the backend",
-        posts : documents
+      console.log("posts were get : ", documents);
+      this.fetched_docs = documents;
+      return Post.count()})
+      .then((count) =>{
+        console.log("count : ", count);
+        res.status(200).json({
+          message : "this is an api response from the backend",
+          posts : this.fetched_docs,
+          total : count
+        });
       });
     });
-});
 router.get('/:id', (req, res, next) => {
   Post.findById(req.params.id).then(post => {
     if(post){
