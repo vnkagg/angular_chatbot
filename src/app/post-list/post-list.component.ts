@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/auth.service';
 import { postService } from './../post.service';
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../post.model';
@@ -17,9 +18,10 @@ export class PostListComponent implements OnInit{
   posts : Post[] = [];
   postSub : Subscription = new Subscription;
   isLoading = false;
+  isAuth = false;
+  authSub : Subscription = new Subscription;
 
-  constructor(public postService : postService) {}
-
+  constructor(public postService : postService, public AuthService : AuthService) {}
   deletePost(id : string){
     this.postService.deletePost(id).subscribe(() => {
       this.postService.getPosts(this.current_page, this.postsperPage);
@@ -36,12 +38,17 @@ export class PostListComponent implements OnInit{
 
   ngOnInit(): void {
     this.calculateParentContainerHeight();
-    this.isLoading = true;
+    this.isAuth = this.AuthService.getisAuth();
+    this.authSub = this.AuthService.isAuth().subscribe(status => {
+      this.isAuth = status;
+    });
     this.postService.getPosts(this.current_page, this.postsperPage);
+    this.isLoading = true;
     this.postSub = this.postService.getPostUpdatedListener()
       .subscribe((receive : {total : number, posts : Post[]}) => {
         this.isLoading = false;
         this.total_posts = receive.total;
+        this.calculateParentContainerHeight();
         this.posts = receive.posts;
       });
   }
@@ -66,7 +73,7 @@ export class PostListComponent implements OnInit{
         console.log("heights", (parentContainer[i/2] as HTMLElement).style.height);
         }
       console.log('after loop');
-    }, 2000);
+    }, 1000);
 
   }
 }

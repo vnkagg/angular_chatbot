@@ -1,0 +1,17 @@
+form{
+  width: 50%;
+  margin: auto;
+}
+mat-form-field{
+  width: 90%;
+  margin: auto;
+}
+mat-card{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+button{
+  max-width: fit-content;
+  margin: auto;
+  padding: 2% 4%;
+}

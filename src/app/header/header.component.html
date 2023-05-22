@@ -1,10 +1,19 @@
 <mat-toolbar>
   <mat-toolbar-row>
     <a routerLink="/">My Messages</a>
-    <span class = " spacer "></span>
+    <span class = "spacer"></span>
     <ul>
       <li>
-        <a mat-button [routerLink]="['/create']" routerLinkActive="mat-accent">Add Post</a>
+        <a *ngIf="status" mat-button [routerLink]="['/create']" routerLinkActive="mat-accent">Add Post</a>
+      </li>
+      <li>
+        <a *ngIf="!status" mat-button [routerLink]="['/login']" routerLinkActive="mat-accent">Login</a>
+      </li>
+      <li>
+        <a *ngIf="status" mat-button (click)="logout()" routerLinkActive="mat-accent">Logout</a>
+      </li>
+      <li>
+        <a *ngIf="!status" mat-button [routerLink]="['/signup']" routerLinkActive="mat-accent">Signup</a>
       </li>
     </ul>
   </mat-toolbar-row>
