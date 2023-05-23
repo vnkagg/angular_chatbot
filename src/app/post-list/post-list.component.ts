@@ -59,20 +59,20 @@ export class PostListComponent implements OnInit{
 
   calculateParentContainerHeight() {
     setTimeout(() => {
-      console.log("debug");
+      // console.log("debug");
       const parentContainer = document.getElementsByClassName('parent-container');
-      console.log(parentContainer);
+      // console.log(parentContainer);
       const childContainers = document.getElementsByClassName('child-container') as HTMLCollection;
-      console.log("child", childContainers);
+      // console.log("child", childContainers);
       for(let i = 0; i<childContainers.length; i+=2){
-        console.log("please ",(childContainers[i] as HTMLElement).offsetHeight);
-        console.log(i/2 + "th iteration : ", "text : ", (childContainers[i] as HTMLElement).offsetHeight, ", image : ", (childContainers[i+1] as HTMLElement).offsetHeight);
+        // console.log("please ",(childContainers[i] as HTMLElement).offsetHeight);
+        // console.log(i/2 + "th iteration : ", "text : ", (childContainers[i] as HTMLElement).offsetHeight, ", image : ", (childContainers[i+1] as HTMLElement).offsetHeight);
         if ((childContainers[i] as HTMLElement).offsetHeight > (childContainers[i+1] as HTMLElement).offsetHeight){
           (parentContainer[i/2] as HTMLElement).style.height = (childContainers[i+1] as HTMLElement).offsetHeight + 'px';
         }
-        console.log("heights", (parentContainer[i/2] as HTMLElement).style.height);
+        // console.log("heights", (parentContainer[i/2] as HTMLElement).style.height);
         }
-      console.log('after loop');
+      // console.log('after loop');
     }, 1000);
 
   }

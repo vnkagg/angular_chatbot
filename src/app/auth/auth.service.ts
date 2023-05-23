@@ -6,8 +6,10 @@ import { AuthData } from './auth-data.model';
 
 @Injectable({ providedIn : 'root' })
 export class AuthService{
+  public userCreds : string = '';
   private token : string = '';
   public authStatus = new Subject<boolean>();
+  public creds = new Subject<string>();
   public statusAuth : boolean = false;
   getToken(){
     return this.token;
@@ -17,6 +19,12 @@ export class AuthService{
   }
   getisAuth(){
     return this.statusAuth;
+  }
+  getCreds(){
+    return this.userCreds;
+  }
+  getCredsobs(){
+    return this.creds.asObservable();
   }
   constructor (public http : HttpClient, private Router : Router) {};
   createUser(email : string, password : string){
@@ -42,6 +50,8 @@ export class AuthService{
         if(token){
           this.statusAuth = true;
           this.authStatus.next(true);
+          this.userCreds = email;
+          this.creds.next(email);
           this.Router.navigate(['/']);
         }
       });
@@ -50,6 +60,8 @@ export class AuthService{
     this.token = '';
     this.statusAuth = false;
     this.authStatus.next(false);
+    this.userCreds = '';
+    this.creds.next('');
     this.Router.navigate(['/']);
   }
 };

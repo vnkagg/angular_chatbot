@@ -21,6 +21,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { UserComponent } from './user/user.component';
 
 
 
@@ -31,7 +32,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     HeaderComponent,
     PostListComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
