@@ -20,7 +20,7 @@ export class PostListComponent implements OnInit{
   isLoading = false;
   isAuth = false;
   authSub : Subscription = new Subscription;
-
+  userid : string = '';
   constructor(public postService : postService, public AuthService : AuthService) {}
   deletePost(id : string){
     this.postService.deletePost(id).subscribe(() => {
@@ -38,10 +38,17 @@ export class PostListComponent implements OnInit{
 
   ngOnInit(): void {
     this.calculateParentContainerHeight();
+    // this.AuthService.authUserLocally();
     this.isAuth = this.AuthService.getisAuth();
     this.authSub = this.AuthService.isAuth().subscribe(status => {
       this.isAuth = status;
     });
+    console.log("from post-list.ts. auth status after refresh :  ", this.isAuth);
+    this.userid = this.AuthService.getCreds()[1];
+    this.AuthService.getCredsobs().subscribe(response => {
+      this.userid = response[1];
+    });
+    console.log("from post-list.ts. user id after refresh :  ", "'" + this.userid + "'");
     this.postService.getPosts(this.current_page, this.postsperPage);
     this.isLoading = true;
     this.postSub = this.postService.getPostUpdatedListener()

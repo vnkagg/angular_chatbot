@@ -12,7 +12,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
   public status : boolean = false;
   public authStatusSubs!: Subscription;
   ngOnInit(): void {
-    this.authStatusSubs = this.AuthService.isAuth().subscribe( isAuthenticated => {
+    console.log("header");
+    this.status = this.AuthService.getisAuth();
+    console.log("this.status", this.status);
+    console.log("getisAuth", this.AuthService.getisAuth());
+    this.authStatusSubs = this.AuthService.isAuth().subscribe(isAuthenticated => {
       this.status = isAuthenticated;
     });
   }

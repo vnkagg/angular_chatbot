@@ -14,18 +14,19 @@ export class postService{
     return this.postUpdater.asObservable();
   }
   getPost(id : string){ // please clarify this shit of having to put null, can't initialise without declaring, and stuff
-    return this.http.get<{message : string, id : string, title : string, content : string, imagePath : string}>
+    return this.http.get<{message : string, id : string, title : string, content : string, imagePath : string, creator : string}>
     ("http://localhost:8080/api/posts/" + id);
   }
   getPosts(page : number , items : number){
     const query = `?page=${page}&items=${items}`;
-    this.http.get<{message : string, posts : [{_id : string, title : string, content : string, imagePath : string}], total : number}>('http://localhost:8080/api/posts' + query)
+    this.http.get<{message : string, posts : [{_id : string, title : string, content : string, imagePath : string, creator : string}], total : number}>('http://localhost:8080/api/posts' + query)
     .pipe(map((postData) => {
       return {total : postData.total, posts : postData.posts.map(post => {
         return {id : post._id,
                 title : post.title,
                 content : post.content,
-                imagePath : post.imagePath}
+                imagePath : post.imagePath,
+                creator : post.creator}
       })}
     }))
       .subscribe((transformedPosts) => {
@@ -34,7 +35,7 @@ export class postService{
       });
   }
   updatePost(id : string, title : string, content:string, image: null | File) {
-    console.log("debug");
+    // console.log("debug");
     if(image){
       const postData = new FormData();
       postData.append("id", id);
@@ -42,16 +43,13 @@ export class postService{
       postData.append("content", content);
       postData.append("image", image);
       this.http.put<{newPath : string}>('http://localhost:8080/api/posts/' + id, postData)
-        .subscribe((responseData) => {
-          // const post = {id : id, title : title, content : content, imagePath : responseData.newPath};
-          // this.postsArr[this.postsArr.findIndex((item) => item.id === id)] = {...post};
-          // this.postUpdater.next([...this.postsArr]);
+        .subscribe(() => {
           this.router.navigate(['/']);
         })
     }else{
       // the user can send an imagePath
       const path = this.postsArr[this.postsArr.findIndex((item) => item.id === id)].imagePath;
-      const post : Post = {id : id, title : title, content : content, imagePath : path};
+      const post : Post = {id : id, title : title, content : content, imagePath : path, creator : ''};
       console.log("this post has reached the post service, updatePost method : ", post);
 
       this.http.put<{message : string}>('http://localhost:8080/api/posts/' + post.id, post)
@@ -73,15 +71,10 @@ export class postService{
     this.http.post<{message : string, id_generated : string, imagePath : string}>('http://localhost:8080/api/posts', postData)
       .subscribe((responseData) => {
         console.log("post.service.ts file/addPosts : ", responseData.message);
-        // post.id = responseData.id_generated; // this was done to try resolve the put 404 error
-        // post.imagePath = responseData.imagePath;
-        // this.postsArr.push(post);
-        // this.postUpdater.next([...this.postsArr]); //the postsArr version was added to implement the getPost method
         this.router.navigate(['/']);
       });
   }
   deletePost(postID : string){
     return this.http.delete<{message : string}>('http://localhost:8080/api/posts/' + postID);
-
   }
 }

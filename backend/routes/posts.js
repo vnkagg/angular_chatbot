@@ -25,12 +25,17 @@ const storage = multer.diskStorage({   //
 });
 
 router.post('', checkAuth, multer({storage : storage}).single("image"), (req, res, next) => {
+  // console.log("add post request is reaching the backend, the router.post() method starts executing");
+  // console.log("this is the request received by it : ", req);
   const url = req.protocol + "://" + req.get('host');
   const post = new Post({
     title : req.body.title,
     content : req.body.content,
-    imagePath : url + '/images/' + req.file.filename
+    imagePath : url + '/images/' + req.file.filename,
+    creator : req.userData.userID
   });
+  // console.log("this is the post = new Post that was created : ", post);
+  // console.log("post.save() should run now")
   post.save()
     .then((response) => {
       console.log("post added : ", response);
@@ -53,9 +58,10 @@ router.put('/:postID', checkAuth, multer({storage : storage}).single("image"), (
     _id : req.params.postID,
     title : req.body.title,
     content : req.body.content,
-    imagePath : imagePath
+    imagePath : imagePath,
+    creator : req.userData.userID
   });
-  Post.updateOne({_id : req.params.postID}, post)
+  Post.updateOne({_id : req.params.postID, creator : req.userData.userID}, post)
     .then(() => {
       res.status(200).json({
         message : "put request was processed, Post was updated in mongoDB, this is from the json object sent to the postservice."
@@ -63,7 +69,7 @@ router.put('/:postID', checkAuth, multer({storage : storage}).single("image"), (
     });
 });
 router.delete('/:id', checkAuth, (req, res, next) =>{
-  Post.deleteOne({ _id : req.params.id })
+  Post.deleteOne({ _id : req.params.id, creator : req.userData.userID })
     .then(result => {
       console.log("a post was deleted : ", result);
       res.status(200).json({
@@ -110,7 +116,7 @@ router.get('', (req, res, next) => {
       this.fetched_docs = documents;
       return Post.count()})
       .then((count) =>{
-        console.log("count : ", count);
+        // console.log("count : ", count);
         res.status(200).json({
           message : "this is an api response from the backend",
           posts : this.fetched_docs,

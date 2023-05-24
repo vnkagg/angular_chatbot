@@ -17,7 +17,7 @@ export class InputComponent implements OnInit{
   content : string = '';
   // ratio : string = '';
   postID : string = ''; // error without initialising a value
-  fetchedPost : Post = {id : "", title : "", content : "", imagePath : ""};
+  fetchedPost : Post = {id : "", title : "", content : "", imagePath : "", creator : ""};
   form! : FormGroup;
   imagePreview : string = '';
   private mode : string = 'create';
@@ -88,7 +88,8 @@ export class InputComponent implements OnInit{
         id : '', //this is just a dummy/temp id
         title : this.form.value.title,
         content : this.form.value.content,
-        imagePath : '' //this.ratio
+        imagePath : '', //this.ratio
+        creator : ''
       };
       this.postService.addPosts(post, this.form.value.image); // revisit
     }else{

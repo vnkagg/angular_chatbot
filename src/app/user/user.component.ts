@@ -10,8 +10,8 @@ export class UserComponent implements OnInit {
   public user : string = '';
   constructor(public AuthService : AuthService){}
   ngOnInit(): void {
-    this.user = this.AuthService.getCreds();
-    this.AuthService.getCredsobs().subscribe(user => {this.user = user});
+    this.user = this.AuthService.getCreds()[0];
+    this.AuthService.getCredsobs().subscribe(user => {this.user = user[0]});
     console.log("user", this.user);
   }
 }

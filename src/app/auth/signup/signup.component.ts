@@ -1,5 +1,5 @@
 import { NgForm } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -7,11 +7,21 @@ import { AuthService } from '../auth.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
+  ngOnInit(): void {
+    this.authService.isAuth().subscribe(
+      () => {
+        this.isLoading = false;
+      }
+    );
+  };
   constructor(public authService : AuthService) {};
   isLoading = false;
   onSignup(form : NgForm){
-    console.log("Raw form data : ", form.value);
-    this.authService.createUser(form.value.email, form.value.password)
+    if(form.invalid){
+      return;
+    }
+    this.isLoading = true;
+    this.authService.createUser(form.value.email, form.value.password);
   }
 }
